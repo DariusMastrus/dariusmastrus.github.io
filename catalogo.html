@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogo D&D 5e & Forgia Arcana</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/100/8b0000/dragon.png">
+    
+    <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/100/8b0000/dragon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.icons8.com/ios-filled/180/8b0000/dragon.png">
+    
+    <meta name="apple-mobile-web-app-title" content="D&D List">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#8b0000">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.icons8.com/fluency/192/dungeons-and-dragons.png">
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="https://img.icons8.com/fluency/192/dungeons-and-dragons.png">
+    
+    <meta name="apple-mobile-web-app-title" content="Catalogo D&D">
+    <meta name="application-name" content="Catalogo D&D">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#8b0000">
+    <style>
+        :root {
+            --bg-color: #fdf6e3;
+            --text-color: #2c3e50;
+            --accent-color: #8b0000;
+            --border-color: #d2b48c;
+            --card-bg: #fff;
+            --row-hover: #fbe9e7;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Book Antiqua', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-bottom: 80px; /* Spazio per il FAB */
+        }
+
+        /* --- NAVIGAZIONE --- */
+        .top-nav { margin-bottom: 20px; }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            border: 1px solid #5a0000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .home-btn:hover {
+            background-color: #a00000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            border-bottom: 4px double var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        /* --- CONTROLLI --- */
+        .controls {
+            background-color: #fff;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            align-items: flex-end;
+        }
+
+        .control-group { flex: 1; min-width: 200px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: var(--accent-color);
+        }
+
+        .search-wrapper { position: relative; width: 100%; }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            padding-right: 35px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #999;
+            display: none;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .clear-btn:hover { color: var(--accent-color); }
+
+        /* --- TABELLA --- */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            min-width: 800px;
+        }
+
+        th, td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+
+        th:hover { background-color: #a00000; }
+        tr:nth-child(even) { background-color: #fafafa; }
+        tr:hover { background-color: var(--row-hover); }
+
+        .price-cell {
+            font-weight: bold;
+            color: #b35900;
+            font-family: 'Courier New', monospace;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-shop { background-color: #e0f2f1; color: #00695c; }
+        .badge-cat { background-color: #fff3e0; color: #e65100; }
+
+        #resultsCount {
+            text-align: right;
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* --- STILI PER LA FORGIA ARCANA (AI CHAT) --- */
+        .fab-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            border: 2px solid #d2b48c;
+        }
+
+        .fab-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            background-color: #a00000;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: #fff;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-footer {
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background-color: #eee;
+            display: flex;
+            gap: 5px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 85%;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .bot-msg {
+            background-color: #e0f2f1;
+            color: #004d40;
+            align-self: flex-start;
+            border-left: 4px solid #00695c;
+        }
+
+        .user-msg {
+            background-color: #ffebee;
+            color: #b71c1c;
+            align-self: flex-end;
+            border-right: 4px solid #b71c1c;
+        }
+
+        .copy-btn {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .copy-btn:hover { background-color: #000; }
+
+        #chatInput {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #sendBtn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+    </style>
+
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="top-nav">
+        <a href="https://dungeonedraghi.it/compendio/" class="home-btn">&#8678; Compendio completo</a>
+    </div>
+
+    <h1>Catalogo D&D 5e</h1>
+
+    <div class="controls">
+        <div class="control-group" style="flex: 2;">
+            <label for="searchInput">Ricerca Oggetto</label>
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Es. Spada, Pozione, Corda...">
+                <span id="clearSearch" class="clear-btn" title="Resetta ricerca">&times;</span>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label for="categoryFilter">Categoria</label>
+            <select id="categoryFilter">
+                <option value="all">Tutte le Categorie</option>
+                <option value="Armi">Armi</option>
+                <option value="Armature">Armature & Scudi</option>
+                <option value="Equipaggiamento">Equipaggiamento d'Avventura</option>
+                <option value="Strumenti">Strumenti & Giochi</option>
+                <option value="Magico">Oggetti Magici & Pozioni</option>
+                <option value="Servizi">Servizi & Incantesimi</option>
+                <option value="Vestiti">Vestiti & Accessori</option>
+                <option value="Veicoli">Veicoli</option>
+                <option value="Trade Goods">Merci di Scambio</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="shopFilter">Negozio</label>
+            <select id="shopFilter">
+                <option value="all">Tutti i Negozi</option>
+                <option value="Fabbro">Fabbro (Blacksmith)</option>
+                <option value="Arciere">Arciere (Fletcher)</option>
+                <option value="Conciatore">Conciatore (Leatherworker)</option>
+                <option value="Emporio">Emporio Generale</option>
+                <option value="Forniture">Forniture d'Avventura</option>
+                <option value="Tempio">Tempio/Fede</option>
+                <option value="Arcano">Arcano/Alchimista</option>
+                <option value="Gioielliere">Gioielliere</option>
+                <option value="Arte">Arte e Giochi</option>
+                <option value="Sartoria">Sartoria</option>
+                <option value="Ricettatore">Ricettatore (Shady Dealer)</option>
+                <option value="Nautico">Nautico</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="itemTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable('name')">Oggetto &#8645;</th>
+                    <th onclick="sortTable('category')">Categoria &#8645;</th>
+                    <th onclick="sortTable('shop')">Negozio &#8645;</th>
+                    <th onclick="sortTable('price')">Prezzo &#8645;</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+    </div>
+    <div id="resultsCount"></div>
+</div>
+
+<div class="fab-btn" id="fabBtn" title="Apri la Forgia Arcana">🛠️</div>
+
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        <span>Forgia: Assistente Crafting</span>
+        <span style="cursor:pointer; font-size:1.2em;" id="closeChat">&times;</span>
+    </div>
+    <div class="chat-body" id="chatBody">
+        <div class="message bot-msg">
+            Ciao! Sono il tuo assistente al Crafting.
+            <br><br>
+            Hai un'idea folle? (Es. <em>"Trappola per topi"</em>, <em>"Bomba fumogena"</em>, <em>"Zattera"</em>).
+            <br><br>
+            Dimmi cosa vuoi costruire e creerò una ricetta usando <strong>solo gli oggetti di questo catalogo</strong> per il tuo DM (o la tua AI).
+        </div>
+    </div>
+    <div class="chat-footer">
+        <input type="text" id="chatInput" placeholder="Es. Trappola esplosiva...">
+        <button id="sendBtn">➤</button>
+    </div>
+</div>
+
+<script>
+    // Funzioni di utilità per i prezzi
+    const parseCost = (str) => {
+        if (!str) return 0;
+        if (str.includes("Vario")) return 0;
+        let val = 0;
+        if (str.includes("gp") || str.includes("mo")) val = parseFloat(str) * 100;
+        else if (str.includes("sp") || str.includes("ma")) val = parseFloat(str) * 10;
+        else if (str.includes("cp") || str.includes("mr")) val = parseFloat(str);
+        return val;
+    };
+
+    // DATABASE COMPLETO
+    const database = [
+        {name: "Piccone da Minatore", cost: "2 mo", cat: "Strumenti", shop: "Fabbro"}, 
+        {name: "Piton (Chiodo da rocciatore)", cost: "5 mr", cat: "Equipaggiamento", shop: "Fabbro"}, 
+        {name: "Pentola di Ferro", cost: "2 mo", cat: "Equipaggiamento", shop: "Fabbro"}, 
+        {name: "Chiodi di Ferro (10)", cost: "1 mo", cat: "Equipaggiamento", shop: "Fabbro"}, 
+        {name: "Cote", cost: "1 mr", cat: "Equipaggiamento", shop: "Fabbro"}, 
+        {name: "Strumenti da Carpentiere", cost: "8 mo", cat: "Strumenti", shop: "Fabbro"}, 
+        {name: "Strumenti da Muratore", cost: "10 mo", cat: "Strumenti", shop: "Fabbro"}, 
+        {name: "Strumenti da Fabbro", cost: "20 mo", cat: "Strumenti", shop: "Fabbro"}, 
+        {name: "Strumenti da Riparatore (Tinker)", cost: "50 mo", cat: "Strumenti", shop: "Fabbro"}, 
+        {name: "Corno (Strumento)", cost: "3 mo", cat: "Strumenti", shop: "Fabbro"}, 
+        {name: "Cuoio Borchiato", cost: "45 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Giaco di Maglia", cost: "50 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Corazza a Scaglie", cost: "50 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Corazza di Piastre (Breastplate)", cost: "400 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Mezza Armatura", cost: "750 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Corazza ad Anelli", cost: "30 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Cotta di Maglia", cost: "75 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Corazza a Strisce (Splint)", cost: "200 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Armatura Completa (Plate)", cost: "1500 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Scudo", cost: "10 mo", cat: "Armature", shop: "Fabbro"},
+        {name: "Pugnale", cost: "2 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Ascia", cost: "5 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Giavellotto", cost: "5 ma", cat: "Armi", shop: "Fabbro"},
+        {name: "Martello Leggero", cost: "2 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Mazza", cost: "5 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Falcetto", cost: "1 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Lancia", cost: "1 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Ascia da Battaglia", cost: "10 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Mazzafrusto", cost: "10 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Falcione (Glaive)", cost: "20 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Ascia Bipenne", cost: "30 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Spadone", cost: "50 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Alabarda", cost: "20 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Lancia da Cavaliere", cost: "10 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Spada Lunga", cost: "15 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Maglio", cost: "10 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Morningstar", cost: "15 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Picca", cost: "5 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Stocco", cost: "25 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Scimitarra", cost: "25 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Spada Corta", cost: "10 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Tridente", cost: "5 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Piccone da Guerra", cost: "5 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Martello da Guerra", cost: "15 mo", cat: "Armi", shop: "Fabbro"},
+        {name: "Sfere Metalliche (1,000)", cost: "1 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Campanella", cost: "1 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Paranco", cost: "1 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Catena (3 metri)", cost: "5 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Piede di Porco", cost: "2 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Rampino", cost: "2 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Martello", cost: "1 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Martello da Slitta", cost: "2 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Trappola per Orsi", cost: "5 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Lampada", cost: "5 ma", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Lanterna Cieca", cost: "10 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Lanterna Schermabile", cost: "5 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Lucchetto", cost: "10 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Manette", cost: "2 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Specchio d'Acciaio", cost: "5 mo", cat: "Equipaggiamento", shop: "Fabbro"},
+        {name: "Balestra Leggera", cost: "25 mo", cat: "Armi", shop: "Arciere"},
+        {name: "Arco Corto", cost: "25 mo", cat: "Armi", shop: "Arciere"},
+        {name: "Balestra a Mano", cost: "75 mo", cat: "Armi", shop: "Arciere"},
+        {name: "Balestra Pesante", cost: "50 mo", cat: "Armi", shop: "Arciere"},
+        {name: "Arco Lungo", cost: "50 mo", cat: "Armi", shop: "Arciere"},
+        {name: "Frecce (20)", cost: "1 mo", cat: "Equipaggiamento", shop: "Arciere"},
+        {name: "Quadrelli (20)", cost: "1 mo", cat: "Equipaggiamento", shop: "Arciere"},
+        {name: "Custodia per Quadrelli", cost: "1 mo", cat: "Equipaggiamento", shop: "Arciere"},
+        {name: "Faretra", cost: "1 mo", cat: "Equipaggiamento", shop: "Arciere"},
+        {name: "Armatura di Cuoio", cost: "10 mo", cat: "Armature", shop: "Conciatore"},
+        {name: "Armatura di Pelle", cost: "10 mo", cat: "Armature", shop: "Conciatore"},
+        {name: "Fionda", cost: "1 ma", cat: "Armi", shop: "Conciatore"},
+        {name: "Otre", cost: "2 ma", cat: "Equipaggiamento", shop: "Conciatore"},
+        {name: "Strumenti da Calzolaio", cost: "5 mo", cat: "Strumenti", shop: "Conciatore"},
+        {name: "Strumenti da Conciatore", cost: "5 mo", cat: "Strumenti", shop: "Conciatore"},
+        {name: "Cornamusa", cost: "30 mo", cat: "Strumenti", shop: "Conciatore"},
+        {name: "Tamburo", cost: "6 mo", cat: "Strumenti", shop: "Conciatore"},
+        {name: "Cassetta Elemosina", cost: "5 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Testo Sacro", cost: "25 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Candela", cost: "1 mr", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Custodia Pergamene", cost: "1 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Turibolo", cost: "5 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Gesso (1 pezzo)", cost: "1 mr", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Fiaschetta", cost: "2 mr", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Borsa del Guaritore", cost: "5 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Simbolo Sacro (Amuleto)", cost: "5 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Simbolo Sacro (Emblema)", cost: "5 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Simbolo Sacro (Reliquiario)", cost: "5 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Acqua Santa (Fiala)", cost: "25 mo", cat: "Magico", shop: "Tempio"},
+        {name: "Incenso (blocco)", cost: "1 mr", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Olio (fiaschetta)", cost: "1 ma", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Pergamena (foglio)", cost: "1 ma", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Profumo (fiala)", cost: "5 mo", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Pozione di Guarigione", cost: "50 mo", cat: "Magico", shop: "Tempio"},
+        {name: "Razioni (1 giorno)", cost: "5 ma", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Torcia", cost: "1 mr", cat: "Equipaggiamento", shop: "Tempio"},
+        {name: "Cura Ferite (Liv 1)", cost: "10 mo", cat: "Servizi", shop: "Tempio"},
+        {name: "Riposo Inviolato (Liv 2)", cost: "50 mo", cat: "Servizi", shop: "Tempio"},
+        {name: "Ristorare Inferiore (Liv 2)", cost: "50 mo", cat: "Servizi", shop: "Tempio"},
+        {name: "Rimuovi Maledizione (Liv 3)", cost: "100 mo", cat: "Servizi", shop: "Tempio"},
+        {name: "Rinascita (Revivify - Liv 3)", cost: "400 mo", cat: "Servizi", shop: "Tempio"},
+        {name: "Rianimare Morti (Raise Dead - Liv 5)", cost: "1000 mo", cat: "Servizi", shop: "Tempio"},
+        {name: "Abaco", cost: "1 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Barile", cost: "1 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Coperta", cost: "3 ma", cat: "Equipaggiamento", shop: "Emporio"}, 
+        {name: "Bottiglia di Vetro", cost: "1 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Secchio", cost: "3 mr", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Baule", cost: "3 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Abiti Comuni", cost: "3 ma", cat: "Vestiti", shop: "Emporio"},
+        {name: "Abiti Pregiati", cost: "11 mo", cat: "Vestiti", shop: "Emporio"},
+        {name: "Boccale", cost: "1 mr", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Brocca", cost: "2 mr", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Scala (3 metri)", cost: "1 ma", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Gavetta", cost: "1 ma", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Specchio", cost: "5 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Carta (foglio)", cost: "1 ma", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Borsa", cost: "3 ma", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Corda Canapa (15m)", cost: "7 ma", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Corda Seta (15m)", cost: "10 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Sacco", cost: "1 mr", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Bilancia da Mercante", cost: "3 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Pala", cost: "1 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Anello con Sigillo", cost: "3 mo", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Sapone", cost: "1 mr", cat: "Equipaggiamento", shop: "Emporio"},
+        {name: "Utensili da Cuoco", cost: "50 mo", cat: "Strumenti", shop: "Emporio"},
+        {name: "Strumenti da Vetraio", cost: "30 mo", cat: "Strumenti", shop: "Emporio"},
+        {name: "Strumenti da Vasaio", cost: "10 mo", cat: "Strumenti", shop: "Emporio"},
+        {name: "Strumenti da Tessitore", cost: "7 ma", cat: "Strumenti", shop: "Emporio"},
+        {name: "Strumenti da Intagliatore", cost: "1 mo", cat: "Strumenti", shop: "Emporio"},
+        {name: "Armatura Imbottita", cost: "5 mo", cat: "Armature", shop: "Forniture"},
+        {name: "Randello", cost: "1 ma", cat: "Armi", shop: "Forniture"},
+        {name: "Bastone Ferrato", cost: "2 ma", cat: "Armi", shop: "Forniture"},
+        {name: "Dardo", cost: "5 mr", cat: "Armi", shop: "Forniture"},
+        {name: "Frusta", cost: "2 mo", cat: "Armi", shop: "Forniture"},
+        {name: "Cerbottana", cost: "10 mo", cat: "Armi", shop: "Forniture"},
+        {name: "Aghi da Cerbottana (50)", cost: "1 mo", cat: "Equipaggiamento", shop: "Forniture"},
+        {name: "Proiettili Fionda (20)", cost: "4 mr", cat: "Equipaggiamento", shop: "Forniture"},
+        {name: "Zaino", cost: "2 mo", cat: "Equipaggiamento", shop: "Forniture"},
+        {name: "Kit da Scalatore", cost: "25 mo", cat: "Equipaggiamento", shop: "Forniture"},
+        {name: "Abiti da Viaggiatore", cost: "2 mo", cat: "Vestiti", shop: "Forniture"},
+        {name: "Clessidra", cost: "25 mo", cat: "Equipaggiamento", shop: "Forniture"},
+        {name: "Asta (3 metri)", cost: "5 mr", cat: "Equipaggiamento", shop: "Forniture"}, 
+        {name: "Fischietto", cost: "5 mr", cat: "Equipaggiamento", shop: "Forniture"}, 
+        {name: "Cannocchiale", cost: "1000 mo", cat: "Equipaggiamento", shop: "Forniture"}, 
+        {name: "Tenda (2 persone)", cost: "2 mo", cat: "Equipaggiamento", shop: "Forniture"}, 
+        {name: "Acciarino", cost: "5 ma", cat: "Equipaggiamento", shop: "Forniture"}, 
+        {name: "Strumenti da Cartografo", cost: "15 mo", cat: "Strumenti", shop: "Forniture"}, 
+        {name: "Strumenti da Gioielliere", cost: "25 mo", cat: "Strumenti", shop: "Forniture"},
+        {name: "Kit Erborista", cost: "5 mo", cat: "Strumenti", shop: "Forniture"},
+        {name: "Strumenti da Navigatore", cost: "25 mo", cat: "Strumenti", shop: "Forniture"},
+        {name: "Rete", cost: "1 mo", cat: "Armi", shop: "Nautico"},
+        {name: "Attrezzatura da Pesca", cost: "1 mo", cat: "Equipaggiamento", shop: "Nautico"},
+        {name: "Barca a Remi", cost: "50 mo", cat: "Veicoli", shop: "Nautico"},
+        {name: "Esca da Pesca (500g)", cost: "5 mr", cat: "Trade Goods", shop: "Nautico"},
+        {name: "Focus: Cristallo", cost: "10 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Focus: Sfera", cost: "20 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Focus: Verga", cost: "10 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Focus: Bastone", cost: "5 mo", cat: "Magico", shop: "Arcano"}, 
+        {name: "Focus: Bacchetta", cost: "10 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Borsa Componenti", cost: "25 mo", cat: "Magico", shop: "Arcano"}, 
+        {name: "Libro degli Incantesimi", cost: "50 mo", cat: "Equipaggiamento", shop: "Arcano"},
+        {name: "Focus Druidico (Vischio)", cost: "1 mo", cat: "Magico", shop: "Arcano"}, 
+        {name: "Focus Druidico (Totem)", cost: "1 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Focus Druidico (Bastone)", cost: "5 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Focus Druidico (Bacchetta Tasso)", cost: "10 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Scorte Alchimista", cost: "50 mo", cat: "Strumenti", shop: "Arcano"},
+        {name: "Pergamena (Cantrip)", cost: "50 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Pergamena (Livello 1)", cost: "100 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Pergamena (Livello 2)", cost: "250 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Pergamena (Livello 3)", cost: "500 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Pergamena (Livello 4)", cost: "2500 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Valutazione Magica (Servizio)", cost: "100 mo", cat: "Servizi", shop: "Arcano"},
+        {name: "Fuoco dell'Alchimista", cost: "50 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Pozione Guarigione (Comune)", cost: "50 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Pozione (Non comune)", cost: "250 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Pozione (Rara)", cost: "2500 mo", cat: "Magico", shop: "Arcano"},
+        {name: "Abiti, Costume", cost: "5 mo", cat: "Vestiti", shop: "Ricettatore"},
+        {name: "Acido (fiala)", cost: "25 mo", cat: "Equipaggiamento", shop: "Ricettatore"}, 
+        {name: "Antitossina", cost: "50 mo", cat: "Equipaggiamento", shop: "Ricettatore"}, 
+        {name: "Triboli (borsa 20)", cost: "1 mo", cat: "Equipaggiamento", shop: "Ricettatore"}, 
+        {name: "Veleno Base (fiala)", cost: "100 mo", cat: "Equipaggiamento", shop: "Ricettatore"}, 
+        {name: "Ariete Portatile", cost: "4 mo", cat: "Equipaggiamento", shop: "Ricettatore"}, 
+        {name: "Kit Trucco", cost: "25 mo", cat: "Strumenti", shop: "Ricettatore"}, 
+        {name: "Kit Falsario", cost: "15 mo", cat: "Strumenti", shop: "Ricettatore"}, 
+        {name: "Kit Avvelenatore", cost: "50 mo", cat: "Strumenti", shop: "Ricettatore"}, 
+        {name: "Arnesi da Scasso", cost: "25 mo", cat: "Strumenti", shop: "Ricettatore"}, 
+        {name: "Set di Dadi", cost: "1 ma", cat: "Strumenti", shop: "Ricettatore"}, 
+        {name: "Carte da Gioco", cost: "5 ma", cat: "Strumenti", shop: "Ricettatore"}, 
+        {name: "Amuleto Squisito", cost: "5 mo", cat: "Vestiti", shop: "Gioielliere"},
+        {name: "Amuleto Mondano", cost: "5 ma", cat: "Vestiti", shop: "Gioielliere"},
+        {name: "Orecchini Squisiti", cost: "4 mo", cat: "Vestiti", shop: "Gioielliere"},
+        {name: "Orecchini Mondani", cost: "4 ma", cat: "Vestiti", shop: "Gioielliere"},
+        {name: "Anello Squisito", cost: "3 mo", cat: "Vestiti", shop: "Gioielliere"},
+        {name: "Valutazione Gemme (3)", cost: "5 mo", cat: "Servizi", shop: "Gioielliere"},
+        {name: "Ridimensionamento Gioiello", cost: "10 mo", cat: "Servizi", shop: "Gioielliere"},
+        {name: "Incastonatura (<100mo)", cost: "45 mo", cat: "Servizi", shop: "Gioielliere"},
+        {name: "Incastonatura (100-1k mo)", cost: "75 mo", cat: "Servizi", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (10 mo)", cost: "10 mo", cat: "Trade Goods", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (50 mo)", cost: "50 mo", cat: "Trade Goods", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (100 mo)", cost: "100 mo", cat: "Trade Goods", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (500 mo)", cost: "500 mo", cat: "Trade Goods", shop: "Gioielliere"},
+        {name: "Scorte da Calligrafo", cost: "10 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Scorte da Pittore", cost: "10 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Set Scacchi dei Draghi", cost: "1 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Set Three-Dragon Ante", cost: "1 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Dulcimer", cost: "25 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Flauto", cost: "2 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Liuto", cost: "35 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Lira", cost: "30 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Flauto di Pan", cost: "12 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Ciaramella", cost: "2 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Viella", cost: "30 mo", cat: "Strumenti", shop: "Arte"},
+        {name: "Cesta", cost: "4 ma", cat: "Equipaggiamento", shop: "Sartoria"},
+        {name: "Sacco a Pelo", cost: "7 ma", cat: "Equipaggiamento", shop: "Sartoria"} 
+    ];
+
+    // Gestione DOM e Logica Tabella
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const shopFilter = document.getElementById('shopFilter');
+    const resultsCount = document.getElementById('resultsCount');
+    const clearSearchBtn = document.getElementById('clearSearch');
+
+    let currentSort = { field: 'name', direction: 'asc' };
+
+    function renderTable(data) {
+        tableBody.innerHTML = '';
+        
+        if (data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Nessun oggetto trovato.</td></tr>';
+            resultsCount.textContent = "";
+            return;
+        }
+
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            let shopClass = "badge badge-shop";
+            let catClass = "badge badge-cat";
+
+            row.innerHTML = `
+                <td><strong>${item.name}</strong></td>
+                <td><span class="${catClass}">${item.cat}</span></td>
+                <td><span class="${shopClass}">${item.shop}</span></td>
+                <td class="price-cell">${item.cost}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        resultsCount.textContent = `Mostrati ${data.length} oggetti su ${database.length}`;
+    }
+
+    function filterData() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCategory = categoryFilter.value;
+        const selectedShop = shopFilter.value;
+
+        return database.filter(item => {
+            const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+            const matchesCategory = selectedCategory === 'all' || item.cat === selectedCategory;
+            const matchesShop = selectedShop === 'all' || item.shop === selectedShop;
+            return matchesSearch && matchesCategory && matchesShop;
+        });
+    }
+
+    function sortTable(field) {
+        if (currentSort.field === field) {
+            currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.field = field;
+            currentSort.direction = 'asc';
+        }
+
+        const filteredData = filterData();
+
+        filteredData.sort((a, b) => {
+            let valA, valB;
+            if (field === 'price') {
+                valA = parseCost(a.cost);
+                valB = parseCost(b.cost);
+            } else {
+                valA = a[field === 'category' ? 'cat' : field].toLowerCase();
+                valB = b[field === 'category' ? 'cat' : field].toLowerCase();
+            }
+
+            if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
+            if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+            return 0;
+        });
+
+        renderTable(filteredData);
+        updateSortIcons(field, currentSort.direction);
+    }
+
+    function updateSortIcons(activeField, direction) {
+        const headers = document.querySelectorAll('th');
+        headers.forEach(th => {
+            const originalText = th.innerText.split(' ')[0];
+            th.innerHTML = `${originalText} &#8645;`;
+            if (th.innerText.includes('Prezzo')) th.innerHTML = 'Prezzo &#8645;';
+        });
+
+        const activeHeader = Array.from(headers).find(th => 
+            (activeField === 'name' && th.innerText.includes('Oggetto')) ||
+            (activeField === 'category' && th.innerText.includes('Categoria')) ||
+            (activeField === 'shop' && th.innerText.includes('Negozio')) ||
+            (activeField === 'price' && th.innerText.includes('Prezzo'))
+        );
+
+        if (activeHeader) {
+            const arrow = direction === 'asc' ? '&#9650;' : '&#9660;';
+            activeHeader.innerHTML = activeHeader.innerHTML.replace('&#8645;', arrow);
+        }
+    }
+
+    function toggleClearButton() {
+        clearSearchBtn.style.display = searchInput.value.length > 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', () => {
+        toggleClearButton();
+        sortTable(currentSort.field);
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        toggleClearButton();
+        sortTable(currentSort.field);
+        searchInput.focus();
+    });
+
+    categoryFilter.addEventListener('change', () => sortTable(currentSort.field));
+    shopFilter.addEventListener('change', () => sortTable(currentSort.field));
+
+    // Initial Render
+    sortTable('name');
+
+
+    // --- LOGICA FORGIA ARCANA (CRAFTING ASSISTANT) ---
+    const fabBtn = document.getElementById('fabBtn');
+    const chatWindow = document.getElementById('chatWindow');
+    const closeChat = document.getElementById('closeChat');
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    // Toggle Chat
+    fabBtn.addEventListener('click', () => {
+        chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        chatInput.focus();
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatWindow.style.display = 'none';
+    });
+
+    function getCatalogAsText() {
+        return database.map(item => `- ${item.name} (${item.cost}) [${item.cat}]`).join('\n');
+    }
+
+    function addMessage(html, className) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${className}`;
+        msgDiv.innerHTML = html;
+        chatBody.appendChild(msgDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    window.copyToClipboard = function(text) {
+        // Funzione di riserva "Vecchia Scuola" per Mobile/File Locali
+        function fallbackCopyTextToClipboard(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            // Assicura che l'area sia invisibile ma tecnicamente selezionabile
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                // Esegue il comando copia nativo del sistema
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'Prompt copiato con successo!' : 'Errore nella copia.';
+                alert(msg + " Ora incollalo nella tua AI.");
+            } catch (err) {
+                alert('Impossibile copiare automaticamente. Seleziona il testo manualmente.');
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        // Tentativo 1: API Moderna (Spesso fallisce su file:// da mobile)
+        if (!navigator.clipboard) {
+            fallbackCopyTextToClipboard(text);
+            return;
+        }
+        
+        navigator.clipboard.writeText(text).then(function() {
+            alert("Prompt copiato con successo! Ora incollalo nella tua AI.");
+        }, function(err) {
+            // Se il metodo moderno fallisce, attiva subito il piano B
+            fallbackCopyTextToClipboard(text);
+        });
+    };
+
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user-msg');
+        chatInput.value = '';
+
+        const loadingMsg = document.createElement('div');
+        loadingMsg.className = 'message bot-msg';
+        loadingMsg.innerText = "Sto consultando il magazzino...";
+        chatBody.appendChild(loadingMsg);
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        setTimeout(() => {
+            chatBody.removeChild(loadingMsg);
+
+            const catalogList = getCatalogAsText();
+
+            const prompt = `Agisci come un esperto Artigiano e Inventore di D&D 5e (stile MacGyver).
+L'utente vuole costruire: "${text}".
+
+Ecco il CATALOGO COMPLETO degli oggetti disponibili nel negozio:
+--- INIZIO CATALOGO ---
+${catalogList}
+--- FINE CATALOGO ---
+
+Il tuo compito:
+1. Identifica quali oggetti specifici da questa lista servono per costruire "${text}". Sii creativo ma logico.
+2. Elenca la quantità necessaria per ogni oggetto.
+3. Calcola il costo totale in monete d'oro (mo).
+4. Descrivi quali strumenti servono.
+5. Se mancano pezzi fondamentali nel catalogo, suggerisci cosa improvvisare o cercare in natura.
+
+Formatta la risposta in modo chiaro e schematico per il giocatore.`;
+
+            const responseHTML = `
+                Ho analizzato il catalogo per il progetto: <strong>${text}</strong>.<br>
+                Ho preparato l'inventario completo per l'IA così saprà cosa hai a disposizione.<br><br>
+                <button class="copy-btn" onclick="copyToClipboard(\`${prompt.replace(/`/g, '\\`').replace(/"/g, '&quot;').replace(/\n/g, '\\n')}\`)">📋 Copia Ricetta per AI</button>
+            `;
+
+            addMessage(responseHTML, 'bot-msg');
+        }, 600);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+</script>
+
+</body>
+</html>
