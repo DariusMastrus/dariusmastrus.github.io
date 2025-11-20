@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Catalogo D&D 5e & Forgia Arcana</title>
     <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/100/8b0000/dragon.png">
     
@@ -366,7 +366,7 @@
                 <option value="Servizi">Servizi & Incantesimi</option>
                 <option value="Vestiti">Vestiti & Accessori</option>
                 <option value="Veicoli">Veicoli</option>
-                <option value="Trade Goods">Merci di Scambio</option>
+                <option value="Merci">Merci di Scambio</option>
             </select>
         </div>
 
@@ -374,18 +374,18 @@
             <label for="shopFilter">Negozio</label>
             <select id="shopFilter">
                 <option value="all">Tutti i Negozi</option>
-                <option value="Fabbro">Fabbro (Blacksmith)</option>
-                <option value="Arciere">Arciere (Fletcher)</option>
-                <option value="Conciatore">Conciatore (Leatherworker)</option>
+                <option value="Fabbro">Fabbro</option>
+                <option value="Arciere">Arciere</option>
+                <option value="Conciatore">Conciatore</option>
                 <option value="Emporio">Emporio Generale</option>
                 <option value="Forniture">Forniture d'Avventura</option>
-                <option value="Tempio">Tempio/Fede</option>
+                <option value="Tempio">Tempio</option>
                 <option value="Stalla">Stalla & Scuderia</option>
-                <option value="Arcano">Arcano/Alchimista</option>
+                <option value="Arcano">Arcano & Alchimista</option>
                 <option value="Gioielliere">Gioielliere</option>
                 <option value="Arte">Arte e Giochi</option>
                 <option value="Sartoria">Sartoria</option>
-                <option value="Ricettatore">Ricettatore (Shady Dealer)</option>
+                <option value="Ricettatore">Ricettatore</option>
                 <option value="Nautico">Nautico</option>
             </select>
         </div>
@@ -596,7 +596,7 @@
         {name: "Rete", cost: "1 mo", cat: "Armi", shop: "Nautico"},
         {name: "Attrezzatura da Pesca", cost: "1 mo", cat: "Equipaggiamento", shop: "Nautico"},
         {name: "Barca a Remi", cost: "50 mo", cat: "Veicoli", shop: "Nautico"},
-        {name: "Esca da Pesca (500g)", cost: "5 mr", cat: "Trade Goods", shop: "Nautico"},
+        {name: "Esca da Pesca (500g)", cost: "5 mr", cat: "Merci", shop: "Nautico"},
         {name: "Focus: Cristallo", cost: "10 mo", cat: "Magico", shop: "Arcano"},
         {name: "Focus: Sfera", cost: "20 mo", cat: "Magico", shop: "Arcano"},
         {name: "Focus: Verga", cost: "10 mo", cat: "Magico", shop: "Arcano"},
@@ -641,10 +641,10 @@
         {name: "Ridimensionamento Gioiello", cost: "10 mo", cat: "Servizi", shop: "Gioielliere"},
         {name: "Incastonatura (<100mo)", cost: "45 mo", cat: "Servizi", shop: "Gioielliere"},
         {name: "Incastonatura (100-1k mo)", cost: "75 mo", cat: "Servizi", shop: "Gioielliere"},
-        {name: "Pietra Preziosa (10 mo)", cost: "10 mo", cat: "Trade Goods", shop: "Gioielliere"},
-        {name: "Pietra Preziosa (50 mo)", cost: "50 mo", cat: "Trade Goods", shop: "Gioielliere"},
-        {name: "Pietra Preziosa (100 mo)", cost: "100 mo", cat: "Trade Goods", shop: "Gioielliere"},
-        {name: "Pietra Preziosa (500 mo)", cost: "500 mo", cat: "Trade Goods", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (10 mo)", cost: "10 mo", cat: "Merci", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (50 mo)", cost: "50 mo", cat: "Merci", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (100 mo)", cost: "100 mo", cat: "Merci", shop: "Gioielliere"},
+        {name: "Pietra Preziosa (500 mo)", cost: "500 mo", cat: "Merci", shop: "Gioielliere"},
         {name: "Scorte da Calligrafo", cost: "10 mo", cat: "Strumenti", shop: "Arte"},
         {name: "Scorte da Pittore", cost: "10 mo", cat: "Strumenti", shop: "Arte"},
         {name: "Set Scacchi dei Draghi", cost: "1 mo", cat: "Strumenti", shop: "Arte"},
@@ -694,9 +694,9 @@
         {name: "Ceralacca", cost: "5 ma", cat: "Equipaggiamento", shop: "Emporio"},
         {name: "Veleno di Verme Purpureo", cost: "2000 mo", cat: "Magico", shop: "Ricettatore"},
         {name: "Veleno di Wyvern", cost: "1200 mo", cat: "Magico", shop: "Ricettatore"},
-        {name: "Farina (500g)", cost: "2 mr", cat: "Trade Goods", shop: "Emporio"},
-        {name: "Sale (500g)", cost: "5 mr", cat: "Trade Goods", shop: "Emporio"},
-        {name: "Ferro (500g)", cost: "1 ma", cat: "Trade Goods", shop: "Fabbro"},
+        {name: "Farina (500g)", cost: "2 mr", cat: "Merci", shop: "Emporio"},
+        {name: "Sale (500g)", cost: "5 mr", cat: "Merci", shop: "Emporio"},
+        {name: "Ferro (500g)", cost: "1 ma", cat: "Merci", shop: "Fabbro"},
     ];
 
     // Gestione DOM e Logica Tabella
@@ -947,4 +947,5 @@ Formatta la risposta in modo chiaro e schematico per il giocatore.`;
 
 </body>
 </html>
+
 
